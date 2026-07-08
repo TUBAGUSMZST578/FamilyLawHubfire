@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilyLaw Hub - Portal Hukum Pernikahan Jarak Jauh di Indonesia</title>
+    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js Library for 3D Visuals -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f4f6fa',
+                            100: '#e5eaf3',
+                            200: '#cbd7e7',
+                            300: '#a3bad4',
+                            400: '#7597be',
+                            500: '#5478a5',
+                            600: '#415e87',
+                            700: '#354d6f',
+                            800: '#1e2e44',
+                            900: '#0b192c', // Deep/Navy Blue
+                        },
+                        gold: {
+                            50: '#fdfbf2',
+                            100: '#fbf5df',
+                            200: '#f5e6b4',
+                            300: '#eed17f',
+                            400: '#e5b950',
+                            500: '#d4af37', // Warm Gold
+                            600: '#b89028',
+                            700: '#946f1e',
+                            800: '#76551b',
+                            900: '#614419',
+                        },
+                        cyanTech: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Animations and Styling */
+        .gold-glow:hover {
+            box-shadow: 0 0 25px rgba(67, 84, 236, 0.45);
+            border-color: rgba(212, 201, 55, 0.7);
+        }
+        .balance-arm {
+            transform-origin: 150px 100px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .left-pan {
+            transform-origin: 70px 100px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .right-pan {
+            transform-origin: 230px 100px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Micro-Animations for Legal Pillars */
+        @keyframes bookWave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(-6deg) scale(1.08); }
+        }
+        .animate-book {
+            animation: bookWave 3s ease-in-out infinite;
+        }
+
+        @keyframes crescentPulse {
+            0%, 100% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.2)); }
+            50% { transform: scale(1.1) translateY(-3px); filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)); }
+        }
+        .animate-crescent {
+            animation: crescentPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes stampPress {
+            0%, 100% { transform: translateY(0) scale(1); }
+            45% { transform: translateY(4px) scale(0.95); }
+            50% { transform: translateY(4px) scale(0.93); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+            55% { transform: translateY(0) scale(1.05); }
+        }
+        .animate-stamp {
+            animation: stampPress 3.5s ease-in-out infinite;
+        }
+
+        @keyframes laptopGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px rgba(6, 182, 212, 0.2)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(47, 233, 9, 0.7)); }
+        }
+        .animate-laptop {
+            animation: laptopGlow 2.8s ease-in-out infinite;
+        }
+
+        /* Ambient floating circles in section backgrounds */
+        @keyframes slowFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .animate-slow-float {
+            animation: slowFloat 8s ease-in-out infinite;
+        }
+
+        /* Scroll reveal class defaults */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FAQ & Timeline Cinematic Animations */
+        .faq-transition {
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, padding 0.4s ease;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+        }
+        .pulse-glow-ring {
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes flowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-grad-line {
+            background: linear-gradient(180deg, #d4af37, #38bdf8, #10b981, #f59e0b);
+            background-size: 100% 300%;
+            animation: flowGradient 6s ease infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden">
+
+<header class="sticky top-0 z-50 bg-navy-900/95 backdrop-blur-md border-b border-navy-800 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <!-- Logo Section -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="p-2.5 bg-gradient-to-tr from-gold-600 to-gold-400 rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-scale-balanced text-navy-900 text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-2xl font-bold text-white tracking-wide">FamilyLaw<span class="text-gold-400">Hub</span></span>
+                    <span class="block text-[9px] uppercase tracking-widest text-slate-400 font-semibold">Portal Edukasi Hukum Indonesia</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#hero" class="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors">Beranda</a>
+                <a href="#keabsahan" class="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors">Keabsahan Hukum</a>
+                <a href="#simulator" class="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors">Uji Syarat</a>
+                <a href="#alur" class="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors">Alur SIMKAH</a>
+                <a href="#faq" class="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors">Tanya Jawab</a>
+            </nav>
+
+            <!-- Action Button / CTA -->
+            <div class="hidden sm:block">
+                <a href="#simulator" class="relative inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-navy-900 bg-gradient-to-r from-gold-400 to-gold-500 rounded-md shadow-md hover:from-gold-300 hover:to-gold-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 transition-all duration-300 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-gavel mr-2"></i> Simulasi Sah
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button type="button" onclick="toggleMobileMenu()" class="text-slate-400 hover:text-white focus:outline-none" aria-label="Toggle menu">
+                    <i id="menuIcon" class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-navy-900 border-b border-navy-800 transition-all duration-300">
+        <div class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-md text-base font-medium text-slate-300 hover:bg-navy-800 hover:text-gold-400">Beranda</a>
+            <a href="#keabsahan" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-md text-base font-medium text-slate-300 hover:bg-navy-800 hover:text-gold-400">Keabsahan Hukum</a>
+            <a href="#simulator" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-md text-base font-medium text-slate-300 hover:bg-navy-800 hover:text-gold-400">Uji Syarat</a>
+            <a href="#alur" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-md text-base font-medium text-slate-300 hover:bg-navy-800 hover:text-gold-400">Alur SIMKAH</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-md text-base font-medium text-slate-300 hover:bg-navy-800 hover:text-gold-400">Tanya Jawab</a>
+            <div class="pt-4 pb-2 border-t border-navy-800">
+                <a href="#simulator" onclick="toggleMobileMenu()" class="w-full text-center block px-4 py-2.5 text-sm font-semibold uppercase tracking-wider text-navy-900 bg-gold-400 rounded-md">
+                    <i class="fa-solid fa-gavel mr-2"></i> Simulasi Sah
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="hero" class="relative bg-gradient-to-b from-navy-900 via-navy-800 to-slate-900 py-20 lg:py-32 overflow-hidden">
+    <!-- Cyber Grid Decoration -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30"></div>
+    
+    <!-- Floating Gold Dust -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-3 h-3 bg-gold-500 rounded-full filter blur-md opacity-25 animate-pulse"></div>
+        <div class="absolute top-1/3 right-1/4 w-4 h-4 bg-cyanTech-400 rounded-full filter blur-md opacity-20 animate-pulse" style="animation-delay: 1.5s"></div>
+        <div class="absolute bottom-1/4 left-1/2 w-2 h-2 bg-gold-400 rounded-full filter blur-sm opacity-30 animate-pulse" style="animation-delay: 3s"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            <!-- Hero Text Content -->
+            <div class="lg:col-span-7 space-y-8 text-center lg:text-left fade-in-up">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-navy-800/80 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase backdrop-blur-sm shadow-md">
+                    <span class="flex h-2 w-2 rounded-full bg-gold-500 animate-ping"></span>
+                    <span>Analisis Hukum Terpercaya &amp; Komprehensif</span>
+                </div>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+                    Menikah Secara Online: <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-200 via-gold-250 to-cyanTech-500font-bold">Bagaimana Hukum Indonesia Mengaturnya?</span>
+                </h1>
+                <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                    Panduan lengkap, dasar hukum kuat, dan keabsahan pernikahan jarak jauh di mata hukum negara serta syariat agama bersama <span class="text-gold-400 font-semibold">FamilyLaw Hub</span>. Temukan kejelasan yuridis di era digitalisasi pernikahan.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#keabsahan" class="w-full sm:w-auto text-center px-8 py-4 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-semibold rounded-lg shadow-xl hover:shadow-gold-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                        <i class="fa-solid fa-scroll mr-2"></i> Pelajari Dasar Hukum
+                    </a>
+                    <a href="#simulator" class="w-full sm:w-auto text-center px-8 py-4 bg-navy-800/80 hover:bg-navy-800 text-white font-medium rounded-lg border border-slate-700 hover:border-gold-500/50 hover:text-gold-400 transition-all duration-300">
+                        <i class="fa-solid fa-scale-balanced mr-2"></i> Cek Syarat Sah
+                    </a>
+                </div>
+
+                <!-- Trust Badge -->
+                <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 max-w-md mx-auto lg:mx-0">
+                    <div>
+                        <span class="block text-2xl font-bold text-gold-400 font-serif">UU 1/74</span>
+                        <span class="block text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Perkawinan</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-cyanTech-400 font-serif">MUI 52</span>
+                        <span class="block text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Fatwa Akad</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-white font-serif">SIMKAH</span>
+                        <span class="block text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Kemenag RI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image/3D WebGL Canvas -->
+            <div class="lg:col-span-5 flex justify-center items-center relative">
+                <!-- Outer Glowing Rings -->
+                <div class="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-gold-500/15 via-cyanTech-500/10 to-transparent blur-3xl animate-pulse"></div>
+                
+                <!-- Beautiful 3D Canvas Box Container -->
+                <div id="canvas-container" class="relative w-full max-w-[420px] h-[420px] bg-navy-900/50 p-1.5 rounded-2xl border-2 border-slate-800/80 backdrop-blur-md shadow-2xl overflow-hidden group cursor-pointer transition-all duration-300 hover:border-gold-500/30">
+                    <div class="absolute top-3 right-4 flex items-center space-x-1.5 z-20">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    </div>
+                    
+                    <!-- WebGL Canvas target -->
+                    <canvas id="hero-3d-canvas" class="w-full h-full block z-10"></canvas>
+
+                    <!-- Floating Widget Overlay on Graphic -->
+                    <div class="absolute bottom-4 left-4 right-4 bg-navy-950/90 border border-gold-500/30 px-4 py-3 rounded-xl text-center backdrop-blur-sm z-20 pointer-events-none transition-all duration-300 group-hover:border-gold-400/50">
+                        <span class="text-[10px] text-slate-400 block uppercase tracking-wider font-bold">Status Simulasi Keadilan</span>
+                        <div class="flex items-center justify-center space-x-2 mt-1">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span class="text-xs font-semibold text-white tracking-wide">Rukun Agama &amp; Berkas Negara Seimbang</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="keabsahan" class="py-24 bg-gradient-to-b from-white to-slate-100 relative overflow-hidden">
+    <!-- Ambient glowing backgrounds in section corner -->
+    <div class="absolute -left-16 top-1/4 w-80 h-80 rounded-full bg-gold-400/10 blur-[100px] animate-slow-float pointer-events-none"></div>
+    <div class="absolute -right-16 bottom-1/4 w-80 h-80 rounded-full bg-emerald-400/10 blur-[100px] animate-slow-float pointer-events-none" style="animation-delay: 3s"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Section Header with animations -->
+        <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+            <span class="text-gold-600 font-extrabold text-xs uppercase tracking-widest bg-gold-50 px-4 py-2 rounded-full border border-gold-300 shadow-sm inline-block animate-pulse">Pilar Legalitas Yuridis</span>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 leading-tight mt-4">
+                Pilar Hukum &amp; Keabsahan Pernikahan Jarak Jauh
+            </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-gold-400 via-emerald-500 to-cyanTech-500 mx-auto my-6 rounded-full shadow-md"></div>
+            <p class="text-slate-600 font-light leading-relaxed">
+                Di bawah ini adalah 4 pilar hukum utama pernikahan jarak jauh di Indonesia. Jelajahi dasar hukum negara, syariat agama, fatwa resmi, dan kesiapan sistem digital yang telah kami persiapkan khusus untuk Anda.
+            </p>
+        </div>
+
+        <!-- 4 Core Cards Grid with high coloring and animations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            
+            <!-- Card 1: UU No.1 Tahun 1974 (Royal Navy/Gold Theme) -->
+            <div class="reveal bg-gradient-to-br from-white to-navy-50/20 border-2 border-slate-200/80 rounded-2xl p-8 hover:bg-white hover:border-gold-500 hover:shadow-2xl hover:shadow-gold-500/10 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-gold-500 to-amber-600 transform scale-y-100 transition-all duration-300"></div>
+                <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-gold-500/5 rounded-full blur-xl group-hover:bg-gold-500/15 transition-all"></div>
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-gold-600 uppercase tracking-widest bg-gold-50 px-2.5 py-1 rounded-md border border-gold-200">Pilar Hukum Negara</span>
+                            <div class="p-3 bg-navy-50 text-navy-900 rounded-xl border border-navy-100 group-hover:bg-gradient-to-tr group-hover:from-gold-500 group-hover:to-gold-400 group-hover:text-navy-900 transition-all duration-300 transform group-hover:scale-110 shadow-md">
+                                <i class="fa-solid fa-book-bookmark text-2xl animate-book inline-block"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-navy-900 mb-4 group-hover:text-gold-600 transition-colors">Keabsahan Perkawinan Berdasarkan UU No. 1 Tahun 1974 (Pasal 2)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Menurut <strong class="text-navy-900 font-medium">Pasal 2 Ayat (1) UU No. 1 Tahun 1974 tentang Perkawinan</strong>, pernikahan adalah sah jika dilaksanakan menurut hukum agamanya masing-masing.
+                        </p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Undang-undang negara secara mutlak menyerahkan syarat keabsahan pertama kepada hukum agama. Jika syariah menyatakan sah, negara wajib mencatat perkawinan tersebut secara resmi.
+                        </p>
+                    </div>
+
+                    <!-- Collapsible Juridical Detail Drawer -->
+                    <div class="mt-4">
+                        <button onclick="togglePillarDetail(1)" class="w-full py-2 px-4 rounded-lg bg-navy-900 text-gold-400 hover:bg-gold-500 hover:text-navy-900 font-semibold text-xs flex justify-between items-center transition-all shadow-md">
+                            <span>BACA ANALISIS YURIDIS DETAIL</span>
+                            <i id="pillarArrow-1" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div id="pillarDetail-1" class="hidden mt-4 p-4 bg-navy-900/5 rounded-xl border border-navy-100/40 text-xs text-slate-700 space-y-2 animate-[fadeInUp_0.4s_ease-out_forwards]">
+                            <p class="font-semibold text-navy-900">Analisis Konstitusi:</p>
+                            <p>Penyerahan legalitas pada hukum agama diatur penuh dalam penjelasan umum UU No. 1/1974. Hal ini menegaskan tidak ada perkawinan di luar hukum masing-masing agama dan kepercayaan. Begitu pilar agama terpenuhi lewat ijab kabul virtual yang sah, kedudukan pencatatan (Pasal 2 ayat 2) berfungsi sebagai pembuktian administratif negara yang berkekuatan hukum tetap.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: KHI Pasal 14 (Emerald Sharia Theme) -->
+            <div class="reveal bg-gradient-to-br from-white to-emerald-50/20 border-2 border-slate-200/80 rounded-2xl p-8 hover:bg-white hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-emerald-500 to-teal-600 transform scale-y-100 transition-all duration-300"></div>
+                <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/15 transition-all"></div>
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">Syariat Hukum Islam</span>
+                            <div class="p-3 bg-emerald-50 text-emerald-900 rounded-xl border border-emerald-100 group-hover:bg-gradient-to-tr group-hover:from-emerald-500 group-hover:to-emerald-400 group-hover:text-white transition-all duration-300 transform group-hover:scale-110 shadow-md">
+                                <i class="fa-solid fa-mosque text-2xl animate-crescent inline-block"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-navy-900 mb-4 group-hover:text-emerald-600 transition-colors">Analisis Rukun Nikah &amp; Ijab Kabul Virtual (KHI Pasal 14)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Kompilasi Hukum Islam menetapkan 5 rukun mutlak nikah. Bagaimana jika salah satu pihak terhalang jarak fisik yang terbentang jauh?
+                        </p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Konsep <strong class="text-emerald-700">Kesatuan Majelis (Ittihadu al-Majlis)</strong> ditafsirkan ulang di era digital sebagai kesatuan waktu real-time melalui transmisi audio-visual yang jelas tanpa manipulasi data.
+                        </p>
+                    </div>
+
+                    <!-- Collapsible Juridical Detail Drawer -->
+                    <div class="mt-4">
+                        <button onclick="togglePillarDetail(2)" class="w-full py-2 px-4 rounded-lg bg-emerald-900 text-emerald-100 hover:bg-emerald-500 hover:text-white font-semibold text-xs flex justify-between items-center transition-all shadow-md">
+                            <span>BACA ANALISIS YURIDIS DETAIL</span>
+                            <i id="pillarArrow-2" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div id="pillarDetail-2" class="hidden mt-4 p-4 bg-emerald-900/5 rounded-xl border border-emerald-100/40 text-xs text-slate-700 space-y-2 animate-[fadeInUp_0.4s_ease-out_forwards]">
+                            <p class="font-semibold text-emerald-900">Analisis Fikih &amp; KHI:</p>
+                            <p>Mayoritas fukaha mazhab Syafi'i mensyaratkan persambungan lafal ijab kabul dalam satu majelis fisik. Namun, Mazhab Hanafi mengizinkan ijab kabul yang tidak berada dalam satu tempat asalkan kabar/pesan ijab sampai kepada mempelai pria secara meyakinkan dan saksi mendengar pembacaan keduanya secara kontinu. Media video call interaktif secara syar'i memenuhi kriteria kesinambungan waktu ini.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Fatwa MUI No. 52 (Amber/Gold Theme) -->
+            <div class="reveal bg-gradient-to-br from-white to-amber-50/20 border-2 border-slate-200/80 rounded-2xl p-8 hover:bg-white hover:border-amber-500 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-amber-500 to-orange-600 transform scale-y-100 transition-all duration-300"></div>
+                <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/15 transition-all"></div>
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">Fatwa Resmi MUI</span>
+                            <div class="p-3 bg-amber-50 text-amber-900 rounded-xl border border-amber-100 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-amber-400 group-hover:text-white transition-all duration-300 transform group-hover:scale-110 shadow-md">
+                                <i class="fa-solid fa-stamp text-2xl animate-stamp inline-block"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-navy-900 mb-4 group-hover:text-amber-600 transition-colors">Kedudukan Hukum Berdasarkan Fatwa MUI No. 52 Tahun 2021</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            MUI secara komprehensif mengeluarkan regulasi keagamaan ketat demi menjaga kesucian ikatan akad nikah jarak jauh di era digital.
+                        </p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Nikah online dinyatakan <strong class="text-amber-700">SAH</strong> jika wali, calon pengantin pria, dan minimal dua saksi terhubung visual-audio interaktif yang stabil dan dipastikan bebas pemalsuan data fisik.
+                        </p>
+                    </div>
+
+                    <!-- Collapsible Juridical Detail Drawer -->
+                    <div class="mt-4">
+                        <button onclick="togglePillarDetail(3)" class="w-full py-2 px-4 rounded-lg bg-amber-800 text-amber-100 hover:bg-amber-500 hover:text-white font-semibold text-xs flex justify-between items-center transition-all shadow-md">
+                            <span>BACA ANALISIS YURIDIS DETAIL</span>
+                            <i id="pillarArrow-3" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div id="pillarDetail-3" class="hidden mt-4 p-4 bg-amber-800/5 rounded-xl border border-amber-100/40 text-xs text-slate-700 space-y-2 animate-[fadeInUp_0.4s_ease-out_forwards]">
+                            <p class="font-semibold text-amber-900">Ketentuan Fatwa MUI No. 52/2021:</p>
+                            <p>Pernikahan online dianggap tidak sah apabila tidak memenuhi salah satu syarat teknis: koneksi audio-visual terputus, gambar buram yang menyulitkan pengenalan wajah asli, atau ketidakjelasan identitas saksi. Integritas data fisik menjadi syarat mutlak keabsahan siber.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Kemenag & SIMKAH (Cyber Tech Blue Theme) -->
+            <div class="reveal bg-gradient-to-br from-white to-cyan-50/20 border-2 border-slate-200/80 rounded-2xl p-8 hover:bg-white hover:border-cyanTech-500 hover:shadow-2xl hover:shadow-cyanTech-500/10 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-cyanTech-500 to-indigo-600 transform scale-y-100 transition-all duration-300"></div>
+                <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-cyanTech-500/5 rounded-full blur-xl group-hover:bg-cyanTech-500/15 transition-all"></div>
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-cyanTech-600 uppercase tracking-widest bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200">Administrasi Kementerian Agama</span>
+                            <div class="p-3 bg-cyan-50 text-cyanTech-600 rounded-xl border border-cyan-100 group-hover:bg-gradient-to-tr group-hover:from-cyanTech-500 group-hover:to-cyanTech-400 group-hover:text-white transition-all duration-300 transform group-hover:scale-110 shadow-md">
+                                <i class="fa-solid fa-laptop-code text-2xl animate-laptop inline-block"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-navy-900 mb-4 group-hover:text-cyanTech-600 transition-colors">Aspek Administrasi Kementerian Agama &amp; Aplikasi SIMKAH</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Integrasi data perkawinan secara daring dipermudah dengan layanan e-Government Kementerian Agama RI demi menunjang pencatatan akurat.
+                        </p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Mulai pendaftaran jadwal, pengecekan berkas dispensasi, hingga penerbitan kartu nikah digital dilakukan secara praktis melalui platform terintegrasi <strong class="text-cyanTech-600 font-semibold">SIMKAH</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Collapsible Juridical Detail Drawer -->
+                    <div class="mt-4">
+                        <button onclick="togglePillarDetail(4)" class="w-full py-2 px-4 rounded-lg bg-cyan-900 text-cyan-100 hover:bg-cyanTech-500 hover:text-white font-semibold text-xs flex justify-between items-center transition-all shadow-md">
+                            <span>BACA ANALISIS YURIDIS DETAIL</span>
+                            <i id="pillarArrow-4" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div id="pillarDetail-4" class="hidden mt-4 p-4 bg-cyan-900/5 rounded-xl border border-cyan-100/40 text-xs text-slate-700 space-y-2 animate-[fadeInUp_0.4s_ease-out_forwards]">
+                            <p class="font-semibold text-cyanTech-600">Integrasi Sistem SIMKAH:</p>
+                            <p>KUA mewajibkan verifikasi dokumen fisik pendaftaran nikah minimal 10 hari kerja sebelum akad dilaksanakan. Dalam hal darurat/luar negeri, Penghulu ditunjuk mengawasi kelayakan koneksi video konferensi dan memvalidasi keaslian tanda tangan digital pada berkas berita acara pernikahan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="simulator" class="py-24 bg-gradient-to-b from-slate-900 via-navy-900 to-slate-900 text-white relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-gold-400 font-semibold text-xs uppercase tracking-widest bg-navy-800 px-3 py-1.5 rounded-full border border-gold-500/30">Simulator Keseimbangan Hukum</span>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">Uji Keabsahan Pernikahan Online</h2>
+            <div class="w-16 h-0.5 bg-gold-400 mx-auto my-4"></div>
+            <p class="text-slate-300 font-light text-sm sm:text-base leading-relaxed">
+                Gunakan simulator interaktif ini untuk memverifikasi apakah rencana akad nikah online memenuhi pilar-pilar keadilan hukum agama &amp; negara agar timbangan hukum berdiri seimbang.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Checklist Control Panel (Left) -->
+            <div class="lg:col-span-6 space-y-6">
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 sm:p-8 backdrop-blur-md">
+                    <h3 class="font-serif text-lg sm:text-xl font-semibold text-gold-400 mb-6 flex items-center">
+                        <i class="fa-solid fa-square-check mr-2"></i> Konfigurasi Kondisi Pernikahan 
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Checkbox 1 -->
+                        <label class="flex items-start p-3 rounded-lg hover:bg-navy-700/50 transition-colors cursor-pointer group">
+                            <input type="checkbox" id="checkRukun" onchange="updateScaleState()" class="mt-1 h-5 w-5 text-gold-500 rounded border-gray-600 bg-navy-900 focus:ring-gold-500 cursor-pointer">
+                            <div class="ml-4">
+                                <span class="text-sm font-semibold text-white group-hover:text-gold-300 transition-colors">Syarat Rukun Agama Lengkap</span>
+                                <span class="block text-xs text-slate-400">Terdapat calon pengantin pria &amp; wanita, wali nikah resmi, dan minimal dua saksi laki-laki dewasa.</span>
+                            </div>
+                        </label>
+                        <!-- Checkbox 2 -->
+                        <label class="flex items-start p-3 rounded-lg hover:bg-navy-700/50 transition-colors cursor-pointer group">
+                            <input type="checkbox" id="checkRealtime" onchange="updateScaleState()" class="mt-1 h-5 w-5 text-gold-500 rounded border-gray-600 bg-navy-900 focus:ring-gold-500 cursor-pointer">
+                            <div class="ml-4">
+                                <span class="text-sm font-semibold text-white group-hover:text-gold-300 transition-colors">Sarana Visual-Audio Dua Arah (Real-Time)</span>
+                                <span class="block text-xs text-slate-400">Menggunakan platform video conference berkualitas tinggi tanpa jeda suara yang menimbulkan syubhat/keraguan.</span>
+                            </div>
+                        </label>
+                        <!-- Checkbox 3 -->
+                        <label class="flex items-start p-3 rounded-lg hover:bg-navy-700/50 transition-colors cursor-pointer group">
+                            <input type="checkbox" id="checkPendaftaran" onchange="updateScaleState()" class="mt-1 h-5 w-5 text-gold-500 rounded border-gray-600 bg-navy-900 focus:ring-gold-500 cursor-pointer">
+                            <div class="ml-4">
+                                <span class="text-sm font-semibold text-white group-hover:text-gold-300 transition-colors">Pendaftaran SIMKAH &amp; KUA Terdaftar</span>
+                                <span class="block text-xs text-slate-400">Berkas administrasi lengkap, lolos verifikasi online di platform Kemenag RI, serta dijadwalkan oleh KUA.</span>
+                            </div>
+                        </label>
+                        <!-- Checkbox 4 -->
+                        <label class="flex items-start p-3 rounded-lg hover:bg-navy-700/50 transition-colors cursor-pointer group">
+                            <input type="checkbox" id="checkHadirPenghulu" onchange="updateScaleState()" class="mt-1 h-5 w-5 text-gold-500 rounded border-gray-600 bg-navy-900 focus:ring-gold-500 cursor-pointer">
+                            <div class="ml-4">
+                                <span class="text-sm font-semibold text-white group-hover:text-gold-300 transition-colors">Kehadiran / Pengawasan Penghulu (Kondisi Darurat)</span>
+                                <span class="block text-xs text-slate-400">Ada wali hakim yang sah, atau ada penghulu resmi yang mengawasi via sistem dengan justifikasi darurat yang disetujui.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Scale Panel (Right) -->
+            <div class="lg:col-span-6 flex flex-col justify-center items-center">
+                <div class="bg-navy-800/40 border border-slate-700/60 rounded-2xl p-6 sm:p-8 w-full max-w-lg text-center backdrop-blur-md">
+                    <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Visualisasi Timbangan Hukum</span>
+                    
+                    <!-- SVG Interactive Scales of Justice -->
+                    <div class="my-6 flex justify-center">
+                        <svg viewBox="0 0 300 240" class="w-full max-w-[340px] h-[240px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Definition of Gradients -->
+                            <defs>
+                                <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#d4af37" />
+                                    <stop offset="100%" stop-color="#aa7c11" />
+                                </linearGradient>
+                                <linearGradient id="cyanGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#38bdf8" />
+                                    <stop offset="100%" stop-color="#0284c7" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Static Base of the Scale -->
+                            <rect x="145" y="40" width="10" height="150" rx="4" fill="url(#goldGrad2)" />
+                            <rect x="100" y="190" width="100" height="15" rx="5" fill="url(#goldGrad2)" />
+                            <path d="M120 190 L180 190 L150 160 Z" fill="#aa7c11" />
+                            <circle cx="150" cy="40" r="10" fill="url(#goldGrad2)" />
+
+                            <!-- Interactive Rotating Core Arm -->
+                            <g id="simulatedScaleArm" class="transition-transform duration-[1000ms] ease-out" style="transform-origin: 150px 40px; transform: rotate(-15deg);">
+                                <line x1="50" y1="40" x2="250" y2="40" stroke="url(#goldGrad2)" stroke-width="4" stroke-linecap="round" />
+                                <circle cx="150" cy="40" r="5" fill="#1e2e44" />
+                                
+                                <!-- Left Side System (Agama Scale) -->
+                                <g id="leftSimPan" class="transition-transform duration-[1000ms] ease-out" style="transform-origin: 50px 40px; transform: rotate(15deg);">
+                                    <line x1="50" y1="40" x2="35" y2="110" stroke="url(#cyanGrad2)" stroke-width="1.5" />
+                                    <line x1="50" y1="40" x2="65" y2="110" stroke="url(#cyanGrad2)" stroke-width="1.5" />
+                                    <path d="M25 110 L75 110 Q50 125 25 110" fill="url(#cyanGrad2)" opacity="0.3" />
+                                    <line x1="25" y1="110" x2="75" y2="110" stroke="url(#cyanGrad2)" stroke-width="2.5" />
+                                    <text x="50" y="95" fill="#ffffff" font-size="8" text-anchor="middle" font-weight="bold">AGAMA</text>
+                                    <!-- Dynamic load counter -->
+                                    <circle id="dotAgama1" cx="45" cy="115" r="3" fill="#e5b950" opacity="0"/>
+                                    <circle id="dotAgama2" cx="55" cy="115" r="3" fill="#e5b950" opacity="0"/>
+                                </g>
+
+                                <!-- Right Side System (Negara Scale) -->
+                                <g id="rightSimPan" class="transition-transform duration-[1000ms] ease-out" style="transform-origin: 250px 40px; transform: rotate(15deg);">
+                                    <line x1="250" y1="40" x2="235" y2="110" stroke="url(#cyanGrad2)" stroke-width="1.5" />
+                                    <line x1="250" y1="40" x2="265" y2="110" stroke="url(#cyanGrad2)" stroke-width="1.5" />
+                                    <path d="M225 110 L275 110 Q50 125 225 110" fill="url(#cyanGrad2)" opacity="0.3" />
+                                    <line x1="225" y1="110" x2="275" y2="110" stroke="url(#cyanGrad2)" stroke-width="2.5" />
+                                    <text x="250" y="95" fill="#ffffff" font-size="8" text-anchor="middle" font-weight="bold">NEGARA</text>
+                                    <!-- Dynamic load counter -->
+                                    <circle id="dotNegara1" cx="245" cy="115" r="3" fill="#38bdf8" opacity="0"/>
+                                    <circle id="dotNegara2" cx="255" cy="115" r="3" fill="#38bdf8" opacity="0"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Dynamic Decision Analysis -->
+                    <div id="decisionCard" class="bg-navy-900 border border-red-500/30 p-5 rounded-xl transition-all duration-300">
+                        <div class="flex items-center justify-center space-x-2 text-red-400" id="decisionHeader">
+                            <i class="fa-solid fa-triangle-exclamation animate-bounce"></i>
+                            <span class="font-bold text-sm tracking-wide">STATUS: TIDAK SEIMBANG</span>
+                        </div>
+                        <p id="decisionText" class="text-xs text-slate-300 mt-2 leading-relaxed">
+                            Timbangan hukum berat sebelah. Anda belum memenuhi syarat syariat agama maupun syarat administrasi negara. Harap lengkapi kriteria di panel sebelah kiri.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="alur" class="py-24 bg-gradient-to-b from-slate-50 to-slate-100 relative overflow-hidden">
+    <!-- Premium background decorations -->
+    <div class="absolute right-0 top-0 w-96 h-96 bg-gold-400/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute left-0 bottom-0 w-96 h-96 bg-cyanTech-400/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+            <span class="text-gold-600 font-bold text-xs uppercase tracking-widest bg-gold-50 px-4 py-2 rounded-full border border-gold-300 shadow-sm inline-block animate-pulse">Alur Pelaksanaan Administrasi</span>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mt-4 leading-tight">
+                Panduan Pendaftaran via SIMKAH
+            </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-gold-400 via-cyanTech-500 to-emerald-500 mx-auto my-6 rounded-full shadow-md"></div>
+            <p class="text-slate-600 font-light leading-relaxed">
+                Ikuti 4 tahapan administrasi resmi yang terintegrasi secara dinamis untuk mendaftarkan dan melegalkan pernikahan Anda menggunakan portal digital Kementerian Agama RI.
+            </p>
+        </div>
+
+        <!-- Vertical Timeline for Desktop & Mobile -->
+        <div class="relative max-w-4xl mx-auto pl-8 sm:pl-12 space-y-12">
+            <!-- Animated Custom Connecting Line with flowing gradient accent -->
+            <div class="absolute left-[19px] sm:left-[23px] top-4 bottom-4 w-1.5 animated-grad-line rounded-full opacity-80 shadow-inner"></div>
+            
+            <!-- Step 1 -->
+            <div class="relative group reveal">
+                <!-- Glowing Pulsing Ring Indicator -->
+                <div class="absolute -left-[35px] sm:-left-[39px] top-1.5 flex items-center justify-center bg-navy-900 text-gold-400 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 border-slate-50 group-hover:bg-gold-500 group-hover:text-navy-900 transition-colors duration-300 shadow-lg pulse-glow-ring">
+                    <span class="font-bold text-sm sm:text-base">1</span>
+                </div>
+                <div class="bg-white border-2 border-slate-200 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-2xl hover:border-gold-500 hover:translate-x-2.5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-gold-500 to-amber-600"></div>
+                    <div class="space-y-2 max-w-xl">
+                        <span class="text-xs font-bold text-gold-600 uppercase tracking-widest block">Tahap Persiapan Sipil</span>
+                        <h3 class="font-serif text-lg sm:text-xl font-bold text-navy-900 group-hover:text-gold-600 transition-colors duration-300">Persiapan Berkas &amp; Dokumen Dasar</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Menyiapkan surat pengantar RT/RW (N1, N2, N4), fotokopi KTP, KK, akta kelahiran, pas foto berlatar biru, dan berkas khusus jika salah satu calon berada di luar negeri (Surat Izin Kedutaan Besar / Konsulat Jenderal).
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 self-end md:self-center p-4 bg-gold-50 rounded-2xl text-gold-500 border border-gold-200 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                        <i class="fa-solid fa-file-shield text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative group reveal">
+                <div class="absolute -left-[35px] sm:-left-[39px] top-1.5 flex items-center justify-center bg-navy-900 text-cyanTech-400 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 border-slate-50 group-hover:bg-cyanTech-500 group-hover:text-white transition-colors duration-300 shadow-lg pulse-glow-ring">
+                    <span class="font-bold text-sm sm:text-base">2</span>
+                </div>
+                <div class="bg-white border-2 border-slate-200 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-2xl hover:border-cyanTech-500 hover:translate-x-2.5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-cyanTech-500 to-blue-600"></div>
+                    <div class="space-y-2 max-w-xl">
+                        <span class="text-xs font-bold text-cyanTech-600 uppercase tracking-widest block">Registrasi Cloud e-Gov</span>
+                        <h3 class="font-serif text-lg sm:text-xl font-bold text-navy-900 group-hover:text-cyanTech-600 transition-colors duration-300">Pendaftaran Online via Aplikasi SIMKAH</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Mengakses situs resmi <a href="https://simkah4.kemenag.go.id/" target="_blank" class="text-cyanTech-500 hover:underline font-bold">simkah4.kemenag.go.id</a>, mengisi formulir lengkap, memilih jadwal pelaksanaan akad, serta mengunggah scan dokumen fisik yang dipersyaratkan.
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 self-end md:self-center p-4 bg-cyan-50 rounded-2xl text-cyanTech-500 border border-cyan-200 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                        <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative group reveal">
+                <div class="absolute -left-[35px] sm:-left-[39px] top-1.5 flex items-center justify-center bg-navy-900 text-emerald-400 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 border-slate-50 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300 shadow-lg pulse-glow-ring">
+                    <span class="font-bold text-sm sm:text-base">3</span>
+                </div>
+                <div class="bg-white border-2 border-slate-200 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-2xl hover:border-emerald-500 hover:translate-x-2.5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-emerald-500 to-teal-600"></div>
+                    <div class="space-y-2 max-w-xl">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest block">Verifikasi Yudisial &amp; Teknis</span>
+                        <h3 class="font-serif text-lg sm:text-xl font-bold text-navy-900 group-hover:text-emerald-600 transition-colors duration-300">Verifikasi Fisik oleh Petugas KUA</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Petugas KUA melakukan pemeriksaan berkas. Pada prosesi akad nikah virtual, kepala KUA menetapkan kelayakan sarana video telekonferensi, mengonfirmasi identitas para saksi dan wali, serta memverifikasi kesiapan teknis sebelum hari-H.
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 self-end md:self-center p-4 bg-emerald-50 rounded-2xl text-emerald-500 border border-emerald-200 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                        <i class="fa-solid fa-user-check text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="relative group reveal">
+                <div class="absolute -left-[35px] sm:-left-[39px] top-1.5 flex items-center justify-center bg-navy-900 text-amber-400 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 border-slate-50 group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300 shadow-lg pulse-glow-ring">
+                    <span class="font-bold text-sm sm:text-base">4</span>
+                </div>
+                <div class="bg-white border-2 border-slate-200 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-2xl hover:border-amber-500 hover:translate-x-2.5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-amber-500 to-orange-600"></div>
+                    <div class="space-y-2 max-w-xl">
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest block">Legitimasi Sipil &amp; Akad</span>
+                        <h3 class="font-serif text-lg sm:text-xl font-bold text-navy-900 group-hover:text-amber-600 transition-colors duration-300">Pelaksanaan Akad &amp; Penerbitan Buku Nikah</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Akad nikah dilangsungkan secara langsung/virtual dengan validasi kehadiran wali dan saksi. Pasca ijab kabul dinyatakan sah, KUA akan menerbitkan Buku Nikah resmi dan memperbarui data kependudukan secara digital di SIAK.
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 self-end md:self-center p-4 bg-amber-50 rounded-2xl text-amber-500 border border-amber-200 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                        <i class="fa-solid fa-file-signature text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagian Unduhan Hukum</title>
+    <!-- Menggunakan Tailwind CSS dari CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menambahkan Font Serif untuk estetika hukum -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        // Konfigurasi tambahan untuk warna kustom
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#0f172a', 950: '#020617' },
+                        gold: { 300: '#fde047', 400: '#fbbf24', 500: '#d97706' }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+
+        // Fungsi dummy untuk tombol
+        function downloadLegalDocument() {
+            alert("Mengunduh dokumen ringkasan hukum sedang diproses...");
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Bagian Kode Anda -->
+    <section class="py-16 bg-gradient-to-tr from-navy-950 to-navy-900 text-white relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="bg-navy-900/60 border border-gold-500/20 rounded-3xl p-8 sm:p-12 backdrop-blur-sm shadow-xl">
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4 text-white">
+                    Butuh Dokumen Rangkuman Hukum Resmi?
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+                    Unduh panduan lengkap berupa ringkasan regulasi, UU perkawinan, syarat administratif, serta fatwa MUI terkait pernikahan virtual di Indonesia secara gratis.
+                </p>
+                
+                <button onclick="downloadLegalDocument()" class="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy-900 bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-300 hover:to-gold-400 rounded-lg shadow-xl hover:shadow-gold-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-file-pdf mr-2 text-base animate-bounce"></i> Unduh Ringkasan Hukum (HTML/PDF)
+                </button>
+                
+                <span class="block text-[11px] text-slate-400 mt-3 font-semibold uppercase tracking-wide">
+                    Diterbitkan Resmi Oleh Tim FamilyLaw Hub
+                </span>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+<section id="faq" class="py-24 bg-white relative overflow-hidden">
+    <!-- Fluid background decoration -->
+    <div class="absolute -right-24 top-1/4 w-96 h-96 rounded-full bg-gold-400/5 blur-[120px] pointer-events-none"></div>
+    <div class="absolute -left-24 bottom-1/4 w-96 h-96 rounded-full bg-cyanTech-400/5 blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-16 reveal">
+            <span class="text-gold-600 font-semibold text-xs uppercase tracking-widest bg-gold-50 px-3 py-1.5 rounded-full border border-gold-200">Tanya &amp; Jawab Populer</span>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mt-4 leading-tight">Menjawab Keraguan Yuridis Anda</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-gold-400 via-cyanTech-500 to-emerald-500 mx-auto my-6 rounded-full shadow-md"></div>
+            <p class="text-slate-600 font-light leading-relaxed max-w-2xl mx-auto text-sm sm:text-base">
+                Kumpulan pertanyaan krusial yang paling sering diajukan mengenai keabsahan administratif dan syariah seputar prosesi pernikahan jarak jauh/online di Indonesia.
+            </p>
+        </div>
+
+        <!-- FAQ Accordions with Kinetic sliding animations and tactile focus -->
+        <div class="space-y-6">
+            
+            <!-- Accordion 1 -->
+            <div id="faqCard-1" class="border-2 border-slate-200 rounded-2xl overflow-hidden bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 relative group reveal">
+                <!-- Highlighted left indicator border -->
+                <div id="faqBorder-1" class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-gold-500 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <button onclick="toggleFAQ(1)" class="w-full flex justify-between items-center p-6 text-left text-navy-900 font-bold transition-colors">
+                    <span class="text-sm sm:text-base font-serif pr-4 group-hover:text-gold-600 transition-colors duration-300">Apakah Buku Nikah resmi akan diterbitkan jika pernikahan dilakukan secara online?</span>
+                    <span class="p-2 bg-slate-100 rounded-xl group-hover:bg-gold-500 group-hover:text-navy-900 transition-colors duration-300 flex items-center justify-center w-10 h-10">
+                        <i id="faqIcon-1" class="fa-solid fa-chevron-down text-gold-600 transition-transform duration-300"></i>
+                    </span>
+                </button>
+                <div id="faqContent-1" class="faq-transition max-h-0 overflow-hidden opacity-0 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                    <p class="mb-3"><strong>Ya, Buku Nikah atau Akta Perkawinan tetap diterbitkan secara resmi dan sah oleh negara.</strong></p>
+                    <p>Syarat utamanya adalah seluruh prosesi pendaftaran dilakukan melalui KUA (untuk Muslim) atau Kantor Catatan Sipil (untuk Non-Muslim) dan tercatat dalam sistem SIMKAH. Meskipun akad nikah secara teknis dilangsungkan virtual, pencatatan dan verifikasi dokumen fisik tetap dilakukan secara sah di hadapan pejabat pencatat nikah.</p>
+                </div>
+            </div>
+
+            <!-- Accordion 2 -->
+            <div id="faqCard-2" class="border-2 border-slate-200 rounded-2xl overflow-hidden bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 relative group reveal">
+                <div id="faqBorder-2" class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-cyanTech-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <button onclick="toggleFAQ(2)" class="w-full flex justify-between items-center p-6 text-left text-navy-900 font-bold transition-colors">
+                    <span class="text-sm sm:text-base font-serif pr-4 group-hover:text-cyanTech-600 transition-colors duration-300">Bagaimana keabsahan perwakilan Wali Nikah jika dia berada di tempat yang berbeda?</span>
+                    <span class="p-2 bg-slate-100 rounded-xl group-hover:bg-cyanTech-500 group-hover:text-white transition-colors duration-300 flex items-center justify-center w-10 h-10">
+                        <i id="faqIcon-2" class="fa-solid fa-chevron-down text-cyanTech-600 transition-transform duration-300"></i>
+                    </span>
+                </button>
+                <div id="faqContent-2" class="faq-transition max-h-0 overflow-hidden opacity-0 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                    <p class="mb-3"><strong>Dalam hukum syariah, Wali Nikah berhak mewakilkan (Taukil Wali) kepada orang lain yang berada di lokasi pengantin pria berada.</strong></p>
+                    <p>Atau opsi kedua adalah wali tersebut mengikrarkan Ijab dari tempatnya berada melalui video conference secara langsung dan real-time yang disaksikan langsung oleh minimal dua saksi resmi di tempat pengantin pria berada. Fatwa MUI No. 52 Tahun 2021 menegaskan metode ini sah secara syariah.</p>
+                </div>
+            </div>
+
+            <!-- Accordion 3 -->
+            <div id="faqCard-3" class="border-2 border-slate-200 rounded-2xl overflow-hidden bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 relative group reveal">
+                <div id="faqBorder-3" class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-emerald-500 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <button onclick="toggleFAQ(3)" class="w-full flex justify-between items-center p-6 text-left text-navy-900 font-bold transition-colors">
+                    <span class="text-sm sm:text-base font-serif pr-4 group-hover:text-emerald-600 transition-colors duration-300">Apa yang terjadi jika jaringan internet terputus di tengah-tengah prosesi Ijab Kabul?</span>
+                    <span class="p-2 bg-slate-100 rounded-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300 flex items-center justify-center w-10 h-10">
+                        <i id="faqIcon-3" class="fa-solid fa-chevron-down text-emerald-600 transition-transform duration-300"></i>
+                    </span>
+                </button>
+                <div id="faqContent-3" class="faq-transition max-h-0 overflow-hidden opacity-0 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                    <p class="mb-3"><strong>Jika koneksi terputus saat prosesi ijab kabul berlangsung, maka prosesi tersebut dinyatakan TIDAK SAH dan harus diulang kembali sejak awal.</strong></p>
+                    <p>Syarat sah nikah online menurut Fatwa MUI mewajibkan adanya kesinambungan komunikasi visual dan audio secara real-time demi menjamin tidak adanya manipulasi suara atau penipuan identitas para pihak di dalam majelis digital.</p>
+                </div>
+            </div>
+
+            <!-- Accordion 4 -->
+            <div id="faqCard-4" class="border-2 border-slate-200 rounded-2xl overflow-hidden bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 relative group reveal">
+                <div id="faqBorder-4" class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-amber-500 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <button onclick="toggleFAQ(4)" class="w-full flex justify-between items-center p-6 text-left text-navy-900 font-bold transition-colors">
+                    <span class="text-sm sm:text-base font-serif pr-4 group-hover:text-amber-600 transition-colors duration-300">Apakah pernikahan online berlaku jika salah satu pihak berada di luar negeri?</span>
+                    <span class="p-2 bg-slate-100 rounded-xl group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300 flex items-center justify-center w-10 h-10">
+                        <i id="faqIcon-4" class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </span>
+                </button>
+                <div id="faqContent-4" class="faq-transition max-h-0 overflow-hidden opacity-0 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                    <p class="mb-3"><strong>Bisa, asalkan pihak yang berada di luar negeri memenuhi dokumen administratif internasional.</strong></p>
+                    <p>Pihak luar negeri wajib melampirkan Certificate of No Impediment (CNI) atau Surat Keterangan Layak Nikah dari Kedutaan/Konsulat Jenderal RI di negara asal, serta didukung pendaftaran SIMKAH dari KUA yang ditunjuk mengawasi prosesi tersebut.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim Penyusun FamilyLawHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1', 600: '#57534e', 700: '#44403c', 900: '#1c1917' },
+                        gold: { 500: '#d97706', 600: '#b45309' },
+                        amber: { 100: '#fef3c7', 200: '#fde68a' }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-gradient { 
+            background: linear-gradient(90deg, #b45309, #d97706, #b45309);
+            background-size: 200% 200%;
+            animation: gradient-shift 6s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .delay-1000 { animation-delay: 1s; }
+    </style>
+</head>
+<body class="bg-stone-50">
+
+    <section class="py-24 bg-slate-900 border-t border-slate-950"></section>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-stone-300/30 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-stone-400/20 rounded-full blur-3xl animate-float delay-1000"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-fade-in">
+                <!-- Title Kecil dengan Background Kuning -->
+                <span class="inline-block text-gold-600 font-semibold text-xs uppercase tracking-[0.2em] mb-4 bg-amber-100 px-4 py-1.5 rounded-full border border-amber-200 shadow-sm">
+                    TIM PENYUSUN WEBSITE
+                </span>
+                
+                <!-- Title Besar -->
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-stone-900 leading-tight animate-gradient">
+                    Tim Penyusun FamilyLawHub
+                </h2>
+                
+                <!-- Deskripsi -->
+                <p class="text-stone-700 font-medium leading-relaxed mt-8 max-w-2xl mx-auto text-lg">
+                    Para ahli hukum dan pengembang kami berkomitmen penuh untuk menghadirkan informasi hukum keluarga Indonesia yang kredibel, transparan, dan mudah diakses.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <script>
+                                        
+                    document.write(members.map((member, index) => `
+                        <div class="group bg-white p-8 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in" style="animation-delay: ${index * 100}ms">
+                            <div class="w-20 h-20 bg-stone-100 rounded-full mx-auto mb-6 overflow-hidden border border-stone-200">
+                                <img src="https://placehold.co/100x100/e7e5e4/57534e?text=User" alt="${member.name}" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-lg mb-1">${member.name} ${index + 1}</h3>
+                            <p class="text-gold-600 text-xs font-semibold uppercase tracking-wider mb-4">${member.role}</p>
+                            <p class="text-stone-500 text-sm leading-relaxed">
+                                Berpengalaman dalam menangani kasus hukum keluarga dan riset regulasi terkait pernikahan virtual di Indonesia.
+                            </p>
+                        </div>
+                    `).join(''));
+                </script>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+             <!-- Team Member 1 -->
+            <div class="bg-yellow border-slate-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                  <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="Desain tanpa judul.jpg" alt="Logo Tim FamilyLawHub" class="w-full h-full object-cover">
+    </div> 
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Tim FamilyLawHub</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+</div>
+
+            <!-- Team Member 2 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="WhatsApp Image 2026-07-07 at 14.33.53.jpeg" alt="poto Muhammad Dzulfiqar" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Muhammad Dzulfiqar (1253010191)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+</div>
+
+            <!-- Team Member 3 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+               <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="galih.jpg" alt="poto Muhammad Galih Faisal" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Muhammad Galih Faisal (1253010002)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+            <!-- Team Member 4 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+               <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="adib.jpg" alt="poto Muhammad Adib Al-Qudsy" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Muhammad Adib Al-Qudsy (1253010021)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+            <!-- Team Member 5 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+               <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="rifa.jpg" alt="poto Rifaa Camelia Zen" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Rifaa Camelia Zen (1253010190)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+            <!-- Team Member 6 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="octa.jpg" alt="poto Octa Fitriani" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Octa Fitriani (1253010180)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+            <!-- Team Member 7 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="saskia.jpg" alt="poto Saskia Dwi Aryanti" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Saskia Dwi Aryanti (1253010015)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+            <!-- Team Member 8 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="bahira.jpg" alt="poto Bahira Husna" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Bahira Husna (1253010202)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+            <!-- Team Member 9 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="hanif.jpg" alt="poto Hanif Muqimul Haq" class="w-full h-full object-cover">
+    </div> 
+
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Hanif Muqimul Haq (1253010198)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+ <!-- Team Member 1 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition-shadow reveal">
+                  <div class="w-14 h-14 rounded-full overflow-hidden flex shrink-0 items-center justify-center">
+        <img src="IMG-20240807-WA0028.jpg"  alt="poto Tubagus Abdurahman" class="w-full h-full object-cover">
+    </div> 
+           <h3 class="font-serif font-bold text-navy-900 text-sm sm:text-base">Tubagus Abdurahman (1253010199)</h3>
+        <p class="text-xs text-slate-500"></p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="bg-navy-900 text-slate-400 py-12 border-t border-navy-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-navy-800">
+            <!-- Brand Info -->
+            <div class="flex items-center space-x-3 text-center md:text-left">
+                <div class="p-2 bg-gold-500 rounded-lg">
+                    <i class="fa-solid fa-scale-balanced text-navy-900 text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-xl font-bold text-white block">FamilyLaw Hub</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest block">Portal Panduan Yuridis Resmi</span>
+                </div>
+            </div>
+            <!-- Quick links -->
+            <div class="flex flex-wrap justify-center gap-6 text-sm">
+                <a href="#hero" class="hover:text-gold-400 transition-colors">Beranda</a>
+                <a href="#keabsahan" class="hover:text-gold-400 transition-colors">Dasar Hukum</a>
+                <a href="#simulator" class="hover:text-gold-400 transition-colors">Uji Keabsahan</a>
+                <a href="#alur" class="hover:text-gold-400 transition-colors">Panduan SIMKAH</a>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center justify-between pt-8 text-xs text-slate-500 text-center sm:text-left gap-4">
+            <p>&copy; 2026 FamilyLaw Hub. Hak Cipta Dilindungi Undang-Undang.</p>
+            <p>Dikembangkan dengan ketelitian hukum dan komitmen kesetaraan akses keadilan digital.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Custom Toast notification overlay -->
+<div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm w-full bg-navy-900 border border-gold-500/30 text-white p-4 rounded-xl shadow-2xl flex items-start space-x-3">
+    <div class="p-1.5 bg-gold-500 text-navy-900 rounded-lg" id="toastIconBg">
+        <i id="toastIcon" class="fa-solid fa-info-circle text-base"></i>
+    </div>
+    <div>
+        <h4 class="font-serif font-bold text-gold-400 text-sm" id="toastTitle">Sistem Terintegrasi</h4>
+        <p class="text-xs text-slate-300 mt-1" id="toastMessage">Pesan pemberitahuan akan muncul di sini secara dinamis.</p>
+    </div>
+</div>
+
+<script>
+    // ==========================================================
+    // Three.js Interactive 3D Scales of Justice System
+    // ==========================================================
+    let scene, camera, renderer;
+    let beamGroup, leftHanger, rightHanger;
+    let goldMaterial;
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+
+    function init3DScale() {
+        const container = document.getElementById('canvas-container');
+        if (!container) return;
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        // Create Scene
+        scene = new THREE.Scene();
+
+        // Camera setup with broad perspective
+        camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+        camera.position.set(0, 1.2, 11);
+
+        // WebGL Renderer with alpha transparency for seamless integration
+        renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('hero-3d-canvas'),
+            antialias: true,
+            alpha: true
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+
+        // Custom metallic materials configuration
+        goldMaterial = new THREE.MeshStandardMaterial({
+            color: 0xd4af37,
+            metalness: 0.9,
+            roughness: 0.15,
+            name: 'gold'
+        });
+
+        const darkSlateMaterial = new THREE.MeshStandardMaterial({
+            color: 0x111b27,
+            metalness: 0.7,
+            roughness: 0.4
+        });
+
+        // Glowing cyan element material
+        const cyanGlassMaterial = new THREE.MeshStandardMaterial({
+            color: 0x0ea5e9,
+            metalness: 0.9,
+            roughness: 0.1,
+            emissive: 0x0284c7,
+            emissiveIntensity: 0.4
+        });
+
+        // Lighting Design: Warm ambient with key dual-directional accent highlights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+        scene.add(ambientLight);
+
+        // Gold key-light representing divine warmth
+        const keyLight = new THREE.DirectionalLight(0xfcf6ba, 1.8);
+        keyLight.position.set(-6, 9, 6);
+        scene.add(keyLight);
+
+        // Cyan cyber-light reflecting advanced modern state integration
+        const accentLight = new THREE.DirectionalLight(0x38bdf8, 1.5);
+        accentLight.position.set(6, -4, 4);
+        scene.add(accentLight);
+
+        // Build Scale Hierarchy using a parent group for safety scaling
+        const scaleGroup = new THREE.Group();
+        scaleGroup.scale.set(0.9, 0.9, 0.9);
+        scaleGroup.position.y = -0.4;
+        scene.add(scaleGroup);
+
+        // Static Scale Base
+        const baseGeo = new THREE.CylinderGeometry(1.6, 1.9, 0.35, 32);
+        const base = new THREE.Mesh(baseGeo, darkSlateMaterial);
+        base.position.y = -3.5;
+        scaleGroup.add(base);
+
+        // Vertical central support pillar
+        const pillarGeo = new THREE.CylinderGeometry(0.18, 0.28, 5.8, 16);
+        const pillar = new THREE.Mesh(pillarGeo, goldMaterial);
+        pillar.position.y = -0.6;
+        scaleGroup.add(pillar);
+
+        // Top sphere ornament
+        const topCapGeo = new THREE.SphereGeometry(0.45, 16, 16);
+        const topCap = new THREE.Mesh(topCapGeo, goldMaterial);
+        topCap.position.y = 2.4;
+        scaleGroup.add(topCap);
+
+        // Rotating Beam Arm Group
+        beamGroup = new THREE.Group();
+        beamGroup.position.set(0, 2.1, 0);
+        scaleGroup.add(beamGroup);
+
+        const beamGeo = new THREE.CylinderGeometry(0.09, 0.09, 5.8, 16);
+        beamGeo.rotateZ(Math.PI / 2); // Rotate to layout horizontally
+        const beam = new THREE.Mesh(beamGeo, goldMaterial);
+        beamGroup.add(beam);
+
+        // Left and Right independent hanging systems
+        leftHanger = new THREE.Group();
+        rightHanger = new THREE.Group();
+        scaleGroup.add(leftHanger);
+        scaleGroup.add(rightHanger);
+
+        // Build individual hanging pans
+        const leftPan = buildHangerAssembly(cyanGlassMaterial);
+        leftHanger.add(leftPan);
+
+        const rightPan = buildHangerAssembly(cyanGlassMaterial);
+        rightHanger.add(rightPan);
+
+        // Animation and Rendering Clock
+        const clock = new THREE.Clock();
+
+        function renderFrame() {
+            requestAnimationFrame(renderFrame);
+
+            const time = clock.getElapsedTime();
+
+            // Continuous premium harmonic swinging animation (tilts left/right)
+            const tiltAngle = Math.sin(time * 1.6) * 0.13;
+            beamGroup.rotation.z = tiltAngle;
+
+            // Compute exact tip attachment points based on arm length (L = 5.8, Half = 2.9)
+            const halfL = 2.9;
+            const cosAngle = Math.cos(tiltAngle);
+            const sinAngle = Math.sin(tiltAngle);
+
+            // Left side tip attachment position
+            const leftAttachX = -halfL * cosAngle;
+            const leftAttachY = 2.1 - halfL * sinAngle;
+            leftHanger.position.set(leftAttachX, leftAttachY, 0);
+
+            // Right side tip attachment position
+            const rightAttachX = halfL * cosAngle;
+            const rightAttachY = 2.1 + halfL * sinAngle;
+            rightHanger.position.set(rightAttachX, rightAttachY, 0);
+
+            // Camera reacts to target tracking from mouse coordinates smoothly (lerp-like)
+            targetX = mouseX * 0.001;
+            targetY = mouseY * 0.001;
+
+            camera.position.x += (targetX * 4 - camera.position.x) * 0.06;
+            camera.position.y += (1.2 - targetY * 3.5 - camera.position.y) * 0.06;
+            camera.lookAt(0, -0.2, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        renderFrame();
+
+        // Resize behavior
+        window.addEventListener('resize', () => {
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+
+        // Mouse move listeners within card wrapper to create elegant interactive parallax rotation
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) - rect.width / 2;
+            mouseY = (e.clientY - rect.top) - rect.height / 2;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            mouseX = 0;
+            mouseY = 0;
+        });
+    }
+
+    // Helper constructor for Scale Pan assemblies
+    function buildHangerAssembly(panMaterial) {
+        const hangerGroup = new THREE.Group();
+
+        // Render 3 secure golden strings hanging in a beautiful cone profile
+        const stringGeo = new THREE.CylinderGeometry(0.012, 0.012, 2.8, 8);
+        stringGeo.translate(0, -1.4, 0); // Offset origin to tip of rotation
+
+        // String Left
+        const strLeft = new THREE.Mesh(stringGeo, goldMaterial);
+        strLeft.rotation.z = 0.16;
+        strLeft.rotation.y = 0;
+        hangerGroup.add(strLeft);
+
+        // String Middle-Right
+        const strMidRight = new THREE.Mesh(stringGeo, goldMaterial);
+        strMidRight.rotation.z = 0.16;
+        strMidRight.rotation.y = (2 * Math.PI) / 3;
+        hangerGroup.add(strMidRight);
+
+        // String Far-Right
+        const strFarRight = new THREE.Mesh(stringGeo, goldMaterial);
+        strFarRight.rotation.z = 0.16;
+        strFarRight.rotation.y = (4 * Math.PI) / 3;
+        hangerGroup.add(strFarRight);
+
+        // Plate/Bowl element representation
+        const bowlGeo = new THREE.CylinderGeometry(1.0, 0.7, 0.08, 32);
+        const bowl = new THREE.Mesh(bowlGeo, panMaterial);
+        bowl.position.y = -2.8;
+        hangerGroup.add(bowl);
+
+        // Decorative golden mounting sphere centered
+        const coreGeo = new THREE.SphereGeometry(0.25, 12, 12);
+        const core = new THREE.Mesh(coreGeo, goldMaterial);
+        core.position.y = -2.75;
+        hangerGroup.add(core);
+
+        return hangerGroup;
+    }
+
+    // ==========================================================
+    // Core Layout and Application Page Logics
+    // ==========================================================
+
+    // Toggle Mobile Menu
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const icon = document.getElementById('menuIcon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.classList.replace('fa-bars', 'fa-xmark');
+        } else {
+            menu.classList.add('hidden');
+            icon.classList.replace('fa-xmark', 'fa-bars');
+        }
+    }
+
+    function toggleFAQ(id) {
+        const content = document.getElementById(`faqContent-${id}`);
+        const icon = document.getElementById(`faqIcon-${id}`);
+        const card = document.getElementById(`faqCard-${id}`);
+        const border = document.getElementById(`faqBorder-${id}`);
+        
+        const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+        
+        // Reset all FAQs for classic high-level legal accordions
+        for (let i = 1; i <= 4; i++) {
+            const curContent = document.getElementById(`faqContent-${i}`);
+            const curIcon = document.getElementById(`faqIcon-${i}`);
+            const curCard = document.getElementById(`faqCard-${i}`);
+            const curBorder = document.getElementById(`faqBorder-${i}`);
+            
+            if (curContent) {
+                curContent.style.maxHeight = '0px';
+                curContent.style.opacity = '0';
+                curContent.classList.remove('p-6');
+            }
+            if (curIcon) curIcon.classList.remove('rotate-180');
+            if (curCard) curCard.classList.remove('shadow-xl', 'bg-white', 'border-gold-500', 'border-cyanTech-500', 'border-emerald-500', 'border-amber-500');
+            if (curBorder) curBorder.style.opacity = '0';
+        }
+
+        // Expand and highlight current if it was closed
+        if (!isOpen) {
+            content.classList.add('p-6');
+            content.style.maxHeight = content.scrollHeight + 50 + "px";
+            content.style.opacity = '1';
+            icon.classList.add('rotate-180');
+            border.style.opacity = '1';
+            
+            // Choose dynamic active border color theme
+            let borderTheme = 'border-gold-500';
+            if (id === 2) borderTheme = 'border-cyanTech-500';
+            if (id === 3) borderTheme = 'border-emerald-500';
+            if (id === 4) borderTheme = 'border-amber-500';
+            
+            card.classList.add('shadow-xl', 'bg-white', borderTheme);
+            showToast("Konsultasi Yuridis", "Jawaban FAQ " + id + " terbuka secara dinamis.", "success");
+        }
+    }
+
+    // Toggle Pilar Hukum Deep-Dive Detail (Dinamis & Interaktif)
+    function togglePillarDetail(id) {
+        const detail = document.getElementById(`pillarDetail-${id}`);
+        const arrow = document.getElementById(`pillarArrow-${id}`);
+        
+        const isOpen = !detail.classList.contains('hidden');
+        
+        if (isOpen) {
+            detail.classList.add('hidden');
+            arrow.classList.remove('rotate-180');
+        } else {
+            detail.classList.remove('hidden');
+            arrow.classList.add('rotate-180');
+            showToast("Memuat Analisis Yuridis", "Detail pasal " + id + " berhasil diperluas.", "info");
+        }
+    }
+
+    function updateScaleState() {
+        // Elements from checklist
+        const rukun = document.getElementById('checkRukun').checked;
+        const realtime = document.getElementById('checkRealtime').checked;
+        const pendaftaran = document.getElementById('checkPendaftaran').checked;
+        const hadirPenghulu = document.getElementById('checkHadirPenghulu').checked;
+
+        // Visual nodes for weight indicators inside pan
+        const dotAgama1 = document.getElementById('dotAgama1');
+        const dotAgama2 = document.getElementById('dotAgama2');
+        const dotNegara1 = document.getElementById('dotNegara1');
+        const dotNegara2 = document.getElementById('dotNegara2');
+
+        // Main arm & pan nodes for transform manipulation
+        const arm = document.getElementById('simulatedScaleArm');
+        const leftPan = document.getElementById('leftSimPan');
+        const rightPan = document.getElementById('rightSimPan');
+
+        // Text & Box feedback nodes
+        const decisionCard = document.getElementById('decisionCard');
+        const decisionHeader = document.getElementById('decisionHeader');
+        const decisionText = document.getElementById('decisionText');
+        
+        // Set weights & check items count
+        let agamaWeight = 0;
+        let negaraWeight = 0;
+
+        if (rukun) { agamaWeight++; dotAgama1.style.opacity = '1'; } else { dotAgama1.style.opacity = '0'; }
+        if (realtime) { agamaWeight++; dotAgama2.style.opacity = '1'; } else { dotAgama2.style.opacity = '0'; }
+        if (pendaftaran) { negaraWeight++; dotNegara1.style.opacity = '1'; } else { dotNegara1.style.opacity = '0'; }
+        if (hadirPenghulu) { negaraWeight++; dotNegara2.style.opacity = '1'; } else { dotNegara2.style.opacity = '0'; }
+
+        // Compute rotation angle based on weight difference
+        let angle = 0;
+        if (agamaWeight > negaraWeight) {
+            angle = -12; // tilted left
+        } else if (negaraWeight > agamaWeight) {
+            angle = 12; // tilted right
+        } else if (agamaWeight === 0 && negaraWeight === 0) {
+            angle = -15; // default uninitialized tilt
+        } else {
+            angle = 0; // perfectly balanced!
+        }
+
+        // Apply dynamic transformations
+        arm.style.transform = `rotate(${angle}deg)`;
+        leftPan.style.transform = `rotate(${-angle}deg)`;
+        rightPan.style.transform = `rotate(${-angle}deg)`;
+
+        // Generate detailed feedback based on states
+        if (agamaWeight === 2 && negaraWeight === 2) {
+            decisionCard.className = "bg-navy-900 border-2 border-emerald-500 p-5 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20";
+            decisionHeader.className = "flex items-center justify-center space-x-2 text-emerald-400";
+            decisionHeader.innerHTML = `<i class="fa-solid fa-circle-check animate-bounce"></i><span class="font-bold text-sm tracking-wide">STATUS: SEIMBANG &amp; SAH (MUTLAK)</span>`;
+            decisionText.innerHTML = "Selamat! Semua prasyarat syariat agama dan administratif negara terpenuhi. Hubungan terbukti selaras dengan UU Perkawinan No. 1/1974 serta Fatwa MUI No. 52/2021. Pernikahan Anda dijamin legal di mata hukum negara dan syariat agama.";
+            showToast("Verifikasi Sukses", "Pernikahan Anda memenuhi pilar-pilar keabsahan agama & negara secara sempurna!", "success");
+        } else if (agamaWeight > 0 && negaraWeight === 0) {
+            decisionCard.className = "bg-navy-900 border border-yellow-500/30 p-5 rounded-xl transition-all duration-300";
+            decisionHeader.className = "flex items-center justify-center space-x-2 text-yellow-400";
+            decisionHeader.innerHTML = `<i class="fa-solid fa-scale-unbalanced-stroke"></i><span class="font-bold text-sm tracking-wide">STATUS: TIMBANGAN BERAT SEBELAH (AGAMA SAJA)</span>`;
+            decisionText.innerHTML = "Rukun syariat agama terpenuhi secara maknawi, namun pernikahan belum terdaftar atau disetujui secara administrasi negara. Pernikahan tanpa pencatatan negara dapat dikategorikan sebagai nikah siri, yang tidak memiliki kekuatan hukum formal (sulit mengurus hak waris/anak).";
+        } else if (negaraWeight > 0 && agamaWeight === 0) {
+            decisionCard.className = "bg-navy-900 border border-yellow-500/30 p-5 rounded-xl transition-all duration-300";
+            decisionHeader.className = "flex items-center justify-center space-x-2 text-yellow-400";
+            decisionHeader.innerHTML = `<i class="fa-solid fa-scale-unbalanced-stroke"></i><span class="font-bold text-sm tracking-wide">STATUS: TIMBANGAN BERAT SEBELAH (NEGARA SAJA)</span>`;
+            decisionText.innerHTML = "Dokumen pendaftaran SIMKAH sudah dikonfigurasi, namun rukun syariat agama belum didefinisikan secara lengkap (saksi, wali, atau interaksi real-time belum dijamin). Akad nikah virtual harus didasari rukun syariat yang ketat agar tidak menimbulkan status nikah syubhat.";
+        } else if (agamaWeight === 1 && negaraWeight === 1) {
+            decisionCard.className = "bg-navy-900 border border-yellow-500/30 p-5 rounded-xl transition-all duration-300";
+            decisionHeader.className = "flex items-center justify-center space-x-2 text-yellow-400";
+            decisionHeader.innerHTML = `<i class="fa-solid fa-scale-unbalanced"></i><span class="font-bold text-sm tracking-wide">STATUS: SEIMBANG SEBAGIAN (BELUM SEMPURNA)</span>`;
+            decisionText.innerHTML = "Timbangan tampak seimbang di permukaan, namun rukun agama dan administrasi negara masih memiliki kekurangan krusial. Harap centang seluruh aspek agar timbangan mencapai keabsahan hukum formal-substansial.";
+        } else {
+            decisionCard.className = "bg-navy-900 border border-red-500/30 p-5 rounded-xl transition-all duration-300";
+            decisionHeader.className = "flex items-center justify-center space-x-2 text-red-400";
+            decisionHeader.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span class="font-bold text-sm tracking-wide">STATUS: TIDAK SEIMBANG</span>`;
+            decisionText.innerHTML = "Timbangan hukum berat sebelah. Anda belum memenuhi syarat syariat agama maupun syarat administrasi negara. Harap lengkapi kriteria di panel sebelah kiri.";
+        }
+    }
+
+    // Dynamic Legal Document Generator & Downloader
+    function downloadLegalDocument() {
+        showToast("Menyiapkan Dokumen", "Harap tunggu, berkas rangkuman hukum pernikahan online sedang disusun...", "info");
+        
+        const docContent = `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>FamilyLaw Hub - Rangkuman Hukum Pernikahan Online di Indonesia</title>
+    <style>
+        body { font-family: 'Georgia', serif; line-height: 1.6; color: #1e293b; max-width: 800px; margin: 0 auto; padding: 40px; }
+        .header { text-align: center; border-bottom: 3px double #d4af37; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { font-size: 26px; margin: 0; color: #0b192c; }
+        .header p { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #64748b; margin: 5px 0 0 0; }
+        .meta { display: flex; justify-content: space-between; font-size: 11px; color: #475569; margin-bottom: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+        h2 { font-size: 18px; color: #0b192c; border-left: 4px solid #d4af37; padding-left: 10px; margin-top: 30px; }
+        p { text-align: justify; font-size: 14px; }
+        .highlight-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .signature { margin-top: 50px; text-align: right; }
+        .signature-line { width: 200px; border-bottom: 1px solid #475569; margin: 60px 0 5px auto; }
+        .credits { font-size: 10px; color: #64748b; text-align: center; margin-top: 60px; border-top: 1px solid #cbd5e1; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FAMILYLAW HUB INDONESIA</h1>
+        <p>E-Briefing Hukum: Regulasi Pernikahan Jarak Jauh &amp; Virtual</p>
+    </div>
+    
+    <div class="meta">
+        <span>Kategori: Analisis Yuridis Komprehensif</span>
+        <span>Tanggal Terbit: Juli 2026</span>
+    </div>
+
+    <h2>1. Kedudukan Yuridis Formal (UU No. 1 Tahun 1974)</h2>
+    <p>Berdasarkan rumusan Pasal 2 Ayat (1) Undang-Undang No. 1 Tahun 1974 tentang Perkawinan, negara menegaskan bahwa perkawinan dinyatakan sah apabila dilakukan menurut hukum masing-masing agamanya dan kepercayaannya itu. Dengan asas lex specialis ini, legitimasi syariah/agama menjadi pilar utama keabsahan secara sipil di mata hukum Republik Indonesia.</p>
+
+    <h2>2. Hukum Syariah &amp; Concept of Ittihadu al-Majlis (Kesatuan Majelis)</h2>
+    <p>Di dalam Kompilasi Hukum Islam (KHI) Pasal 14, ijab kabul merupakan salah satu rukun nikah. Perdebatan klasik mengenai batasan fisik satu tempat (ittihadu al-majlis) telah dijawab melalui interpretasi hukum kontemporer. Di era digital, kesatuan majelis tidak lagi dimaknai secara ruang fisik, melainkan secara maknawi/digital (real-time video teleconference tanpa adanya jeda waktu, distorsi audio-visual, serta manipulasi data fisik para pihak).</p>
+
+    <h2>3. Pembatasan Ketat &amp; Syarat Fatwa MUI No. 52 Tahun 2021</h2>
+    <div class="highlight-box">
+        <strong>Ketentuan Syarat Sah Akad Nikah Online:</strong><br>
+        1. Wali nikah, calon pengantin pria, dan dua orang saksi wajib terhubung melalui transmisi audio dan visual dua arah secara langsung (real-time).<br>
+        2. Harus ada kepastian validasi fisik data kependudukan secara akurat demi menghindari syubhat atau penipuan sipil.<br>
+        3. Koneksi tidak boleh terputus; pemutusan jaringan membatalkan kesinambungan ijab kabul.
+    </div>
+
+    <h2>4. Alur Prosedur SIMKAH Online</h2>
+    <p>Pasangan wajib mendaftarkan berkas legal melalui portal SIMKAH dari Kementerian Agama RI. Dokumen pengantar RT/RW, surat keterangan sehat, dan izin khusus (bila melibatkan warga negara asing) diverifikasi sepenuhnya oleh kepala KUA setempat agar status pernikahan tercatat resmi dan memperoleh Buku Nikah resmi dari negara.</p>
+
+    <div class="signature">
+        <p>Hormat kami,<br></p>
+        <div class="signature-line"></div>
+        <p style="font-size: 11px; color: #475569; margin: 0;">Tim Penasihat Hukum FamilyLaw Hub</p>
+    </div>
+
+    <div class="credits">
+        Daftar Penyusun Dokumen: Tubagus Abdurahman (1253010199), Muhammad Dzulfiqar (125301091), Muhammad Galih Faisal (1253010002), Muhammad Adib Al-Qudsy (1253010021), Rifaa camelia Zen (1253010190), Octa Fitriani (1253010180), Saskia Dwi Aryanti (1253010015), Bahira Husna (1253010202), Hanif Muqimul Haq (1253010198).
+    </div>
+</body>
+</html>`;
+
+        const blob = new Blob([docContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Panduan_Nikah_Online_FamilyLawHub_2026.html';
+        document.body.appendChild(a);
+        a.click();
+        
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Unduhan Selesai", "Rangkuman hukum berhasil diekspor sebagai file HTML mandiri.", "success");
+        }, 1500);
+    }
+
+    // Helper Toast Notification Controller
+    function showToast(title, message, type = "info") {
+        const toast = document.getElementById('toast');
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        const iconBg = document.getElementById('toastIconBg');
+        const icon = document.getElementById('toastIcon');
+
+        toastTitle.innerText = title;
+        toastMessage.innerText = message;
+
+        if (type === "success") {
+            iconBg.className = "p-1.5 bg-emerald-500 text-white rounded-lg";
+            icon.className = "fa-solid fa-circle-check";
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 max-w-sm w-full bg-slate-900 border border-emerald-500/30 text-white p-4 rounded-xl shadow-2xl flex items-start space-x-3";
+        } else if (type === "info") {
+            iconBg.className = "p-1.5 bg-cyanTech-500 text-white rounded-lg";
+            icon.className = "fa-solid fa-circle-info animate-pulse";
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 max-w-sm w-full bg-slate-900 border border-cyanTech-500/30 text-white p-4 rounded-xl shadow-2xl flex items-start space-x-3";
+        } else {
+            iconBg.className = "p-1.5 bg-gold-500 text-navy-900 rounded-lg";
+            icon.className = "fa-solid fa-gavel";
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 max-w-sm w-full bg-slate-900 border border-gold-500/30 text-white p-4 rounded-xl shadow-2xl flex items-start space-x-3";
+        }
+
+        setTimeout(() => {
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm w-full bg-navy-900 border border-gold-500/30 text-white p-4 rounded-xl shadow-2xl flex items-start space-x-3";
+        }, 5000);
+    }
+
+    // Scroll Reveal Engine using Intersection Observer
+    document.addEventListener("DOMContentLoaded", function () {
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        revealElements.forEach((el) => {
+            observer.observe(el);
+        });
+    });
+
+    // Initialize Page on window load
+    window.onload = function () {
+        // Initialize 3D scales visualization
+        init3DScale();
+        
+        // Initialize Simulator default scale status
+        updateScaleState();
+    }
+</script>
+</body>
+</html>
